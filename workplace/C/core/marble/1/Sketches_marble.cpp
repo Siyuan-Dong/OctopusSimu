@@ -23,8 +23,8 @@ typedef DLeft<3,21100> EDL;
 typedef SuMaxSketch<12500,3> SM;
 typedef SuMaxSketch<20000,3> ESM;
 
-typedef MARBLE<15000> MB;
-typedef MARBLE<24000> EMB;
+typedef MARBLE<1500> MB;
+typedef MARBLE<2400> EMB;
 
 struct lalas{
 	int group;

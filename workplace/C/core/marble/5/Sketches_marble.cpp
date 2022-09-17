@@ -20,11 +20,11 @@ typedef ElasticSketch<50,100000> ESketch;
 typedef DLeft<3,13600> DL;
 typedef DLeft<3,21100> EDL;
 
-typedef SuMaxSketch<12500,3> SM;
-typedef SuMaxSketch<20000,3> ESM;
+typedef SuMaxSketch<3500,3> SM;
+typedef SuMaxSketch<5600,3> ESM;
 
-typedef MARBLE<25000> MB;
-typedef MARBLE<40000> EMB;
+typedef MARBLE<3500> MB;
+typedef MARBLE<5600> EMB;
 
 struct lalas{
 	int group;

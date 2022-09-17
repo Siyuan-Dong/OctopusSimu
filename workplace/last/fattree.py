@@ -92,6 +92,7 @@ sketches = Sketches.Sketches()
 
 culprit_switches=[]
 culprit_flows=dict()
+# culprit_num=100
 culprit_num=int(k*k*k//4*args.err_flow_ratio)
 culprit_typ= args.culprit_typ
 culprit_name = ["black","loop","jitter","wait"]
@@ -173,11 +174,15 @@ class CheckSwitch:
                 if not self.intrsec(self.env.now-self.duration,self.env.now,key,culprit_time[key]):
                     continue
                 reported_list = []
+                for dle in range(0,cnt_core):
+                    print(dle,self.sketches.coresketch[dle].PPrint(),file=f)
+                for dle in range(0,cnt_edge):
+                    print(dle,self.sketches.edgesketch[dle].PPrint(),file=f)
                 for j in range(101,102,2):
                 # for j in range(1,10,2):
                     t=0
                     if culprit_typ==0:
-                        t=100/j
+                        t=80/j
                     else:
                         t=j/100
                     ##############################################

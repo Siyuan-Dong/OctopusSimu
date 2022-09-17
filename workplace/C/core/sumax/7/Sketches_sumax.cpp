@@ -20,8 +20,8 @@ typedef ElasticSketch<50,100000> ESketch;
 typedef DLeft<3,13600> DL;
 typedef DLeft<3,21100> EDL;
 
-typedef SuMaxSketch<30000,3> SM;
-typedef SuMaxSketch<48000,3> ESM;
+typedef SuMaxSketch<4500,3> SM;
+typedef SuMaxSketch<7200,3> ESM;
 
 typedef MARBLE<12500> MB;
 typedef MARBLE<20000> EMB;

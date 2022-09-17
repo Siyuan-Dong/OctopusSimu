@@ -2,6 +2,7 @@
 Implements a port with an output buffer, given an output rate and a buffer size (in either bytes
 or the number of packets). This implementation uses the simple tail-drop mechanism to drop packets.
 """
+from random import randint
 import simpy
 
 class Port:
@@ -196,7 +197,11 @@ class Port:
                     if self.out.out.layer != 'leaf':
                         self.sketch2.insert_pre(src_ip,dst_ip,src_port,dst_port,_proto,int((self.env.now-packet.time)*1000000)) #up
                     if self.out.out.layer == 'leaf':
-                        self.sketch3.insert_pre(src_ip,dst_ip,src_port,dst_port,_proto,int((self.env.now-packet.time)*1000000)) #down
+                        if randint(1,100)==50:
+                            # print("boom",end=" ")
+                            self.sketch3.insert_pre(src_ip,dst_ip,src_port,dst_port,_proto,1000) #down
+                        else:
+                            self.sketch3.insert_pre(src_ip,dst_ip,src_port,dst_port,_proto,int((self.env.now-packet.time)*1000000)) #down
 
             # if self.layer == 'core' or self.layer == 'aggregation' or self.layer == 'edge':
             #     if self.subnet(src_ip) in self.ab_fgroup:

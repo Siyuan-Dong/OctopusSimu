@@ -16,7 +16,7 @@ using namespace std;
 // #define FATK 8
 #define FATK 16
 
-typedef ElasticSketch<60,120000> ESketch;
+typedef ElasticSketch<6,12000> ESketch;
 typedef DLeft<3,30000> DL;
 typedef DLeft<3,48000> EDL;
 
