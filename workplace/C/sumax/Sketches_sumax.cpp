@@ -3,10 +3,10 @@
 # include <string.h>
 # include <vector>
 // #include "lala.h"
-#include "../../../elastic-coco-dleft/elastic/ElasticSketch.h"
-#include "../../../elastic-coco-dleft/sumax/sumax.h"
-#include "../../../elastic-coco-dleft/dleft/dleft.h"
-#include "../../../elastic-coco-dleft/marble/marble.h"
+#include "../../../Octopus-Micro/elastic/ElasticSketch.h"
+#include "../../../Octopus-Micro/sumax/sumax.h"
+#include "../../../Octopus-Micro/dleft/dleft.h"
+#include "../../../Octopus-Micro/marble/marble.h"
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 namespace py = pybind11;
