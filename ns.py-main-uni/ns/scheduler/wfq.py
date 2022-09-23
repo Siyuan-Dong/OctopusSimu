@@ -224,9 +224,6 @@ class WFQServer:
                 dst_port = (packet.flow_id>>8) & 0xffff
                 _proto = packet.flow_id & 0xff
                 
-                # if self.layer == 'edge':
-                #     if self.out.out.layer == 'leaf':
-                #         self.sketch3.insert_pre(src_ip,dst_ip,src_port,dst_port,_proto,int((self.env.now-packet.time)*1000000)) #down
 
                 if self.layer == 'core' or self.layer == 'aggregation' or self.layer == 'edge':
                     if self.algo == "dleft":

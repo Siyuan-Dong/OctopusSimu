@@ -105,14 +105,9 @@ class Port:
             self.busy = 1
             self.busy_packet_size = packet.size
             
-            if self.port_id>=4:
-                self.cnt+=1
-                # print("ele",self.element_id,self.cnt)
-                # print("sz",packet.size,"rate",self.rate,packet.size * 8.0 / self.rate)
             if self.rate > 0:
                 # yield self.env.timeout(packet.size * 8.0 / self.rate)
                 if self.rate<10001:
-                    # print("ko")
                     for key in self.culprit_time.keys():
                         if not (self.env.now>=key and self.env.now<self.culprit_time[key]):
                             continue
@@ -198,15 +193,9 @@ class Port:
                         self.sketch2.insert_pre(src_ip,dst_ip,src_port,dst_port,_proto,int((self.env.now-packet.time)*1000000)) #up
                     if self.out.out.layer == 'leaf':
                         if randint(1,100)==50:
-                            # print("boom",end=" ")
                             self.sketch3.insert_pre(src_ip,dst_ip,src_port,dst_port,_proto,1000) #down
                         else:
                             self.sketch3.insert_pre(src_ip,dst_ip,src_port,dst_port,_proto,int((self.env.now-packet.time)*1000000)) #down
 
-            # if self.layer == 'core' or self.layer == 'aggregation' or self.layer == 'edge':
-            #     if self.subnet(src_ip) in self.ab_fgroup:
-            #         tim = int(self.env.now*1000000)
-            #         self.sketch1.insert_pre(src_ip,dst_ip,src_port,dst_port,_proto,tim)
-            #         self.sketches.update_core_key(src_ip,dst_ip,src_port,dst_port,_proto)
 ########################################################################################################
             return self.store.put(packet)
