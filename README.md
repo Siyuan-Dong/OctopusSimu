@@ -2,7 +2,7 @@
 
 - `ns.py-main` contains the ns.py package for simutation.
 - `Octopus-Micro` contains the codes of OctopusSketch and MicroSketch.
-- `workplace` contains the main program and parameter settings for simutation.
+- `workplace` contains the main program and parameter settings for simulation.
 
 ## Usage
 ### Basic Setups
@@ -17,11 +17,11 @@
 
 ### More functions and tools
 
-- Generating errors using `./workplace/utils/create_error.py`.
+- Generate errors using `./workplace/utils/create_error.py`.
 
 - Generate DCTCP distribution using `./workplace/utils/TCP_distribution.py`. 
 	
 
 ### Running Simulations
 - Go to `./workplace/simu` folder.
-- Type `bash simu.sh` to run the simutation
+- Type `bash simu.sh` to run the simulation
