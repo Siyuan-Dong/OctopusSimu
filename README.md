@@ -1,5 +1,5 @@
 ## Reference
-Our implementation of simulation is based on ns.py (https://github.com/TL-System/ns.py), which is a pythonic discrete-event network simulator.
+Our implementation of simulation is based on ns.py (https://github.com/TL-System/ns.py), which is a pythonic discrete-event network simulator. It can be used to connect multiple networking components together easily, including packet generators, network links, switch elements, schedulers, traffic shapers, traffic monitors, and demultiplexing elements.
 
 ## File Descriptions
 
