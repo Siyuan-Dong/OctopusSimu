@@ -1,3 +1,5 @@
+Our implementation of simulation is based on ns.py (https://github.com/TL-System/ns.py), which is a pythonic discrete-event network simulator.
+
 ## File Descriptions
 
 - `ns.py-main` contains the ns.py package for simulation.
