@@ -25,4 +25,5 @@
 - Go to `./workplace/simu` folder.
 - Type `bash c.sh` to bind the OctopusMon implemented in C++ to the simulation implemented in Python
 - Type `bash simu.sh` to run the simulation
+
 The output of the simulation is the accuracy of anomaly location and AFG detection.
