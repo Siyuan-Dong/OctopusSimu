@@ -1,6 +1,6 @@
 ## File Descriptions
 
-- `ns.py-main` contains the ns.py package for simutation.
+- `ns.py-main` contains the ns.py package for simulation.
 - `Octopus-Micro` contains the codes of OctopusSketch and MicroSketch.
 - `workplace` contains the main program and parameter settings for simulation.
 
@@ -24,4 +24,5 @@
 
 ### Running Simulations
 - Go to `./workplace/simu` folder.
+- Type `bash c.sh` to bind the OctopusMon implemented in C++ to the simulation implemented in Python
 - Type `bash simu.sh` to run the simulation
