@@ -5,7 +5,7 @@
 #include "../coco/coco.h"
 
 
-template<int bucket_num, int tot_memory_in_bytes>
+// template<int bucket_num, int tot_memory_in_bytes>
 class ElasticSketch
 {
     static constexpr int heavy_mem = bucket_num * sizeof(Bucket);
@@ -15,7 +15,8 @@ public:
     HeavyPart<bucket_num> heavy_part;
     CocoSketch *light_part[INTERVAL_CNT];
 
-    ElasticSketch() {
+    ElasticSketch(int bucket_num, int tot_memory_in_bytes) {
+    // ElasticSketch() {
         ofstream fout("log.txt",ios::app);
         fout<<"heavy_mem:"<<heavy_mem<<" Bucket:"<<sizeof(Bucket)<<" light_mem:"<<light_mem<<" "<<std::flush;
         fout.close();

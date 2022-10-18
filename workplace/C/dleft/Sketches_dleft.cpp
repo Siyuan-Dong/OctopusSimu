@@ -15,31 +15,24 @@ using namespace std;
 #define MAX_HASH_NUM 16
 // #define FATK 4
 // #define FATK 8
-#define FATK 16
+// #define FATK 16
 
-typedef ElasticSketch<10,20000> ESketch;
-typedef DLeft<3,4500> DL;
-typedef DLeft<3,7200> EDL;
+typedef ElasticSketch ESketch;
+typedef DLeft DL;
 
-typedef SuMaxSketch<12500,3> SM;
-typedef SuMaxSketch<20000,3> ESM;
-
-typedef MARBLE<12500> MB;
-typedef MARBLE<20000> EMB;
-
-struct lalas{
+struct cmp_T{
 	int group;
 	double ratio;
 }la[2000];
 
-bool cmp(lalas x, lalas y){
+bool cmp(cmp_T x, cmp_T y){
 	return x.ratio>y.ratio;
 }
 
 class Sketches{
 public:
 
-	int e_num,c_num,e[FATK*FATK/2];
+	int e_num,c_num,e[520],FATK;
 
 	vector<vector<uint32_t>> ab_fs;
 	// vector<TUPLES> ab_fs;
@@ -49,14 +42,18 @@ public:
 	vector<ESketch> outsketch;
 	// vector<ESM> edgesketch;
 	// vector<SM> coresketch;
-	vector<EDL> edgesketch;
-	vector<DL> coresketch;
-	Sketches(){
-		e_num=FATK*FATK/2;c_num=FATK*FATK*3/4;
-		insketch.resize(e_num);
-		outsketch.resize(e_num);
-		edgesketch.resize(e_num);
-		coresketch.resize(c_num);
+	vector<DL> edgeDleft;
+	vector<DL> coreDleft;
+	Sketches(int _FATK,int ES_bucket_num, int ES_memory,int EDL_num, int EDL_memory,int CDL_num, int CDL_memory){
+		FATK=_FATK;e_num=FATK*FATK/2;c_num=FATK*FATK*3/4;
+		for(int i=0;i<e_num;i++){
+			insketch.push_back(ESketch(ES_bucket_num,ES_memory));
+			outsketch.push_back(ESketch(ES_bucket_num,ES_memory));
+			edgeDleft.push_back(DL(EDL_bucket_num,EDL_memory));
+		}
+		for(int i=0;i<c_num;i++){
+			coreDleft.push_back(DL(CDL_bucket_num,CDL_memory));
+		}
 
 		int tmp=0;
 		for(int i=0;i<FATK;i++){
@@ -68,7 +65,7 @@ public:
 			cout<<e[i]<<" ";
 		}
 		cout<<endl;
-		// memset(la,0,sizeof(lalas)*2000);
+		// memset(la,0,sizeof(cmp_T)*2000);
 		Clear();
 	}
 	void Clear(){
@@ -80,7 +77,7 @@ public:
 		for(int i=0;i<c_num;i++) coresketch[i].clear();
 		ab_fgs.clear();
 		ab_fs.clear();
-		memset(la,0,sizeof(lalas)*2000);
+		memset(la,0,sizeof(cmp_T)*2000);
 	}
 
 	void PPrint(){
@@ -195,7 +192,7 @@ public:
 		for(int i=0;i<top;i++){
 			res.push_back(la[i].group);
 		}
-		// memset(la,0,sizeof(lalas)*2000);
+		// memset(la,0,sizeof(cmp_T)*2000);
 		return res;
 	}
 	~Sketches(){
@@ -207,7 +204,7 @@ PYBIND11_MODULE(Sketches, m) {
 	py::class_<Sketches> sketches(m, "Sketches");
 	
     
-    sketches.def(py::init<>())
+    sketches.def(py::init<int,int,int,int,int,int,int>())
         .def("Clear", &Sketches::Clear)
         .def("ab_fg", &Sketches::ab_fg)
         .def("update_core_key", &Sketches::update_core_key)
@@ -232,7 +229,7 @@ PYBIND11_MODULE(Sketches, m) {
 
 	py::class_<ESketch>(sketches, "ElasticSketch")
 	// py::class_<ESketch>(m, "ElasticSketch")
-		.def(py::init<>())
+		.def(py::init<int,int>())
         .def("insert", &ESketch::insert)
         .def("insert_pre", &ESketch::insert_pre)
         .def("query_partial_key", &ESketch::query_partial_key)
@@ -265,26 +262,6 @@ PYBIND11_MODULE(Sketches, m) {
         .def("query_interval", &DL::query_interval)
         .def("query", &DL::query);
 
-	py::class_<EDL>(sketches, "EDL")
-        .def(py::init<>())
-        .def("PPrint", &EDL::PPrint)
-        .def("insert", &EDL::insert)
-        .def("insert_pre", &EDL::insert_pre)
-		.def("query_wait_pre", &EDL::query_wait_pre)
-        .def("query_wait", &EDL::query_wait)
-		.def("query_pre", &EDL::query_pre)
-        .def("query_interval_pre", &EDL::query_interval_pre)
-        .def("query", &EDL::query);
-
-
-	py::class_<ESM>(sketches, "ESM")
-        .def(py::init<>())
-		.def("insert", &ESM::insert)
-		.def("insert_pre", &ESM::insert_pre)
-		.def("query_interval_pre", &ESM::query_interval_pre)
-		.def("query_wait_pre", &ESM::query_wait_pre)
-		.def("query_pre", &ESM::query_pre)
-		.def("query", &ESM::query);
 
 	py::class_<SM>(sketches, "SM")
         .def(py::init<>())
@@ -295,14 +272,6 @@ PYBIND11_MODULE(Sketches, m) {
 		.def("query_pre", &SM::query_pre)
 		.def("query", &SM::query);
 
-	py::class_<EMB>(sketches, "EMB")
-        .def(py::init<>())
-		.def("insert", &EMB::insert)
-		.def("insert_pre", &EMB::insert_pre)
-		.def("query_interval_pre", &EMB::query_interval_pre)
-		.def("query_wait_pre", &EMB::query_wait_pre)
-		.def("query_pre", &EMB::query_pre)
-		.def("query", &EMB::query);
 
 	py::class_<MB>(sketches, "MB")
         .def(py::init<>())
