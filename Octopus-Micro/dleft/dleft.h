@@ -4,7 +4,7 @@
 #include "../common/Util.h"
 #include <bits/stdc++.h>
 // #include "../elastic/param.h"
-template<int _D, uint32_t memory>
+// template<int _D, uint32_t memory>
 class DLeft {
 public:
     struct Counter{
@@ -15,7 +15,7 @@ public:
         uint32_t max_wait;
     };
 
-    DLeft() {
+    DLeft(int _D, uint32_t memory) {
         D = _D;
         L = memory / D / sizeof(Counter);
         ofstream fout("log.txt",ios::app);

@@ -49,10 +49,10 @@ public:
 		for(int i=0;i<e_num;i++){
 			insketch.push_back(ESketch(ES_bucket_num,ES_memory));
 			outsketch.push_back(ESketch(ES_bucket_num,ES_memory));
-			edgeDleft.push_back(DL(EDL_bucket_num,EDL_memory));
+			edgeDleft.push_back(DL(EDL_num,EDL_memory));
 		}
 		for(int i=0;i<c_num;i++){
-			coreDleft.push_back(DL(CDL_bucket_num,CDL_memory));
+			coreDleft.push_back(DL(CDL_num,CDL_memory));
 		}
 
 		int tmp=0;
@@ -72,9 +72,9 @@ public:
 		for(int i=0;i<e_num;i++){
 			insketch[i].clear();
 			outsketch[i].clear();
-			edgesketch[i].clear();
+			edgeDleft[i].clear();
 		}
-		for(int i=0;i<c_num;i++) coresketch[i].clear();
+		for(int i=0;i<c_num;i++) coreDleft[i].clear();
 		ab_fgs.clear();
 		ab_fs.clear();
 		memset(la,0,sizeof(cmp_T)*2000);
@@ -211,8 +211,8 @@ PYBIND11_MODULE(Sketches, m) {
         .def("get_ab_fs", &Sketches::get_ab_fs)
 		.def_readwrite("insketch", &Sketches::insketch)
 		.def_readwrite("outsketch", &Sketches::outsketch)
-		.def_readwrite("edgesketch", &Sketches::edgesketch)
-		.def_readwrite("coresketch", &Sketches::coresketch);
+		.def_readwrite("edgeDleft", &Sketches::edgeDleft)
+		.def_readwrite("coreDleft", &Sketches::coreDleft);
 		// .def_readwrite("ab_fs", &Sketches::ab_fs);
 
 	py::class_<TUPLES>(sketches, "TUPLES")
@@ -251,7 +251,7 @@ PYBIND11_MODULE(Sketches, m) {
     	.export_values();
 
 	py::class_<DL>(sketches, "DL")
-        .def(py::init<>())
+        .def(py::init<int,uint32_t>())
         .def("PPrint", &DL::PPrint)
         .def("insert", &DL::insert)
         .def("insert_pre", &DL::insert_pre)
@@ -262,24 +262,5 @@ PYBIND11_MODULE(Sketches, m) {
         .def("query_interval", &DL::query_interval)
         .def("query", &DL::query);
 
-
-	py::class_<SM>(sketches, "SM")
-        .def(py::init<>())
-		.def("insert", &SM::insert)
-		.def("insert_pre", &SM::insert_pre)
-		.def("query_interval_pre", &SM::query_interval_pre)
-		.def("query_wait_pre", &SM::query_wait_pre)
-		.def("query_pre", &SM::query_pre)
-		.def("query", &SM::query);
-
-
-	py::class_<MB>(sketches, "MB")
-        .def(py::init<>())
-		.def("insert", &MB::insert)
-		.def("insert_pre", &MB::insert_pre)
-		.def("query_interval_pre", &MB::query_interval_pre)
-		.def("query_wait_pre", &MB::query_wait_pre)
-		.def("query_pre", &MB::query_pre)
-		.def("query", &MB::query);
 }
 

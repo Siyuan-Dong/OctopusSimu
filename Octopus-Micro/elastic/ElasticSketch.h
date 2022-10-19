@@ -8,15 +8,17 @@
 // template<int bucket_num, int tot_memory_in_bytes>
 class ElasticSketch
 {
-    static constexpr int heavy_mem = bucket_num * sizeof(Bucket);
-    static constexpr int light_mem = (tot_memory_in_bytes - heavy_mem) / INTERVAL_CNT;
+    int heavy_mem,light_mem;
 
 public:
-    HeavyPart<bucket_num> heavy_part;
+    HeavyPart heavy_part;
     CocoSketch *light_part[INTERVAL_CNT];
 
-    ElasticSketch(int bucket_num, int tot_memory_in_bytes) {
+    ElasticSketch(int bucket_num, int tot_memory_in_bytes):heavy_part(bucket_num) {
     // ElasticSketch() {
+        heavy_mem = bucket_num * sizeof(Bucket);
+        light_mem = (tot_memory_in_bytes - heavy_mem) / INTERVAL_CNT;
+
         ofstream fout("log.txt",ios::app);
         fout<<"heavy_mem:"<<heavy_mem<<" Bucket:"<<sizeof(Bucket)<<" light_mem:"<<light_mem<<" "<<std::flush;
         fout.close();
@@ -75,7 +77,7 @@ public:
         return result;
     }
 
-    int get_bucket_num() { return heavy_part.get_bucket_num(); }
+    // int get_bucket_num() { return heavy_part.get_bucket_num(); }
 
     void *operator new(size_t sz) {
         constexpr uint32_t alignment = 64;

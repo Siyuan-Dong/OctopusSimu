@@ -4,12 +4,18 @@
 #include "param.h"
 // #define USING_SIMD_ACCELERATION
 
-template<int bucket_num>
+// template<int bucket_num>
 class HeavyPart
 {
 public:
-    Bucket buckets[bucket_num];
-    HeavyPart() { this->clear(); }
+    Bucket* buckets;
+    int bucket_num;
+    // Bucket buckets[bucket_num];
+    HeavyPart(int _bucket_num) { 
+        this->clear(); 
+        buckets = new Bucket[_bucket_num];
+        bucket_num = _bucket_num;
+    }
     ~HeavyPart() {}
 
     void clear() { memset(buckets, 0, sizeof(Bucket) * bucket_num); }
